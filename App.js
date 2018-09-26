@@ -1,10 +1,15 @@
 import React from 'react';
-import Header from './src/components/header';
+import { View } from 'react-native';
+import Header from './src/components/Header';
+import FeatureList from './src/components/FeatureList';
 
 export default class App extends React.Component {
   render() {
     return (
-        <Header />
+      <View>
+        <Header headerText={'Speed Reading Trainer'} />
+        <FeatureList />
+      </View>
     );
   }
 }
