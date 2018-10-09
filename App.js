@@ -1,15 +1,37 @@
 import React from 'react';
-import { View } from 'react-native';
-import Header from './src/components/Header';
-import FeatureList from './src/components/FeatureList';
+import * as Expo from 'expo';
+import { createDrawerNavigator } from 'react-navigation';
+import HomeScreen from './src/screens/HomeScreen';
+import AboutScreen from './src/screens/AboutScreen';
+import SpeedReaderScreen from './src/screens/SpeedReaderScreen';
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isReady: false
+    };
+  }
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+    
+    this.setState({ isReady: true });
+  }
   render() {
+    if (!this.state.isReady) {
+      return <Expo.AppLoading />;
+    }
     return (
-      <View>
-        <Header headerText={'Speed Reading Trainer'} />
-        <FeatureList />
-      </View>
+       <AppDrawerNavigator />
     );
   }
 }
+
+const AppDrawerNavigator = createDrawerNavigator({
+  Home: HomeScreen,
+  SpeedReader: SpeedReaderScreen,
+  About: AboutScreen
+});

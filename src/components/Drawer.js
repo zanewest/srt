@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const FeatureList = () => {
+const Drawer = () => {
     return (
         <View>
-            <Text>Reader</Text>
+            createDrawerNavigator({
+                Home: HomeScreen,
+                Settings: SettingsScreen
+             });
         </View>
     );
 };
