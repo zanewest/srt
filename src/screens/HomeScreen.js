@@ -16,7 +16,7 @@ class HomeScreen extends Component {
               </Button>
             </Left>
             <Body>
-              <Title>Speed Reading Trainer</Title>
+              <Title>Velocity</Title>
             </Body>
           </Header>
           <View style={styles.jumbotron}>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     backgroundColor: '#d50000',
-    height: 150
+    height: 200
   },
   titleText: {
     fontSize: 25,
