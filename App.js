@@ -31,7 +31,7 @@ export default class App extends React.Component {
 }
 
 const AppDrawerNavigator = createDrawerNavigator({
-  Home: HomeScreen,
+  Home: SpeedReaderScreen,
   SpeedReader: SpeedReaderScreen,
   About: AboutScreen
 });

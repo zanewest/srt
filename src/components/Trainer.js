@@ -1,18 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Image } from 'react-native';
 
-
 class Trainer extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.startTrainer = this.startTrainer.bind(this);
-        this.resetCount = this.resetCount.bind(this);
-    }
-
     state = {
-         text: ['And', 'it', 'came', 'to', 'pass', 'that', 'Zane',
-         'did', 'love', 'Alie,', 'yea', 'even', 'a', 'whole', 'two', 'lots',
+         text: ['1', '2', '3', '4', '5', '6', '7',
+         '8', '9', '10', '11', '12', 'a', 'whole', 'two', 'lots',
          'it', 'came', 'to', 'pass', 'that', 'Zane',
          'it', 'came', 'to', 'pass', 'that', 'Zane',
          'it', 'came', 'to', 'pass', 'that', 'Zane',
@@ -23,58 +15,66 @@ class Trainer extends React.Component {
          isOn: false
      };
 
-    componentWillMount() {
-      
+    rewind = () => {
+        this.stopTrainer();
+        console.log("isOn in rewind should be false and is " , {isOn: this.state.isOn});
+        let tempCount = 0;
+        tempCount = this.state.count;
+        
+        //TODO add logic here for rewinding approx 10 seconds and not just four words.
+        if (this.state.count >= 4) {
+            this.setState({ count: this.state.count - 4 });
+        }
+        this.startTrainer();
+        //console.log(tempCount);
     }
 
-    componentDidMount() {
-      
-    }
-
-    prepareTextFormat() {
-         
-    }
-
-    lowerSpeed() {
-        if (this.state.speed !== 800) {
+    lowerSpeed = () => {
+        const speed = this.state.speed;
+        console.log({ speed: this.state.speed });
+        if (this.state.speed <= 800) {
             this.setState({ speed: this.state.speed + 100 });
         }
         this.stopTrainer();
-        if (this.state.isOn) {
-            this.startTrainer();
-        }
+        console.log('speed is', speed);
+        setTimeout(this.startTrainer, speed);
     }
 
-    raiseSpeed() {
-        if (this.state.speed !== 100) {
+    raiseSpeed = () => {
+        const speed = this.state.speed;
+        console.log({ speed: this.state.speed });
+        if (this.state.speed > 100) {
             this.setState({ speed: this.state.speed - 100 });
         }
         this.stopTrainer();
-        if (this.state.isOn) {
-            this.startTrainer();
-        }
+        setTimeout(this.startTrainer, speed);
     }
 
-    startTrainer() {
+    startTrainer = () => {
         const speed = this.state.speed;
         this.interval = setInterval(() => {
             this.setState(
                 { count: this.state.count + 1 }
             );
         }, speed);
-        this.setState(
-            { isOn: true }
-        );
+        console.log('isOn in startTrainer should be false and is ', { isOn: this.state.isOn });
+        this.isOnToggle();
+        console.log('isOn in startTrainer should be true and is ', { isOn: this.state.isOn });
     }
 
-    stopTrainer() {
+    stopTrainer = () => {
         clearInterval(this.interval);
-        this.setState(
-            { isOn: false }
-        );
+        //console.log("isOn in stopTrainer should be false and is ", { isOn: this.state.isOn });
+        this.isOnToggle();
     }
 
-    resetCount() {
+    isOnToggle = () => {
+        this.setState({
+            isOn: !this.state.isOn
+        });
+    }
+
+    resetCount = () => {
         this.setState(
             { count: 0 }
         );
@@ -88,16 +88,16 @@ class Trainer extends React.Component {
                 {this.state.text[this.state.count]}
                 </Text>
                 <View style={styles.readerCtrls}>
-                    <TouchableOpacity style={styles.button} onPress={() => { console.log('you clicked me'); }}>
+                    <TouchableOpacity style={styles.button} onPress={this.rewind}>
                         <Image source={require('../assets/rewind.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.lowerSpeed(); }}>
+                    <TouchableOpacity style={styles.button} onPress={this.lowerSpeed}>
                         <Image source={require('../assets/minus.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => { this.raiseSpeed(); }}>
+                    <TouchableOpacity style={styles.button} onPress={this.raiseSpeed}>
                         <Image source={require('../assets/add.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => { console.log('you clicked me'); }}>
+                    <TouchableOpacity style={styles.button} onPress={this.fastForward}>
                         <Image source={require('../assets/fastforward.png')} />
                     </TouchableOpacity>
                     <Button 
@@ -111,7 +111,6 @@ class Trainer extends React.Component {
                     title="Reset"
                     />
                 </View>
-             
             </View>
         );
     }
