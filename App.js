@@ -4,6 +4,7 @@ import { createDrawerNavigator } from 'react-navigation';
 import HomeScreen from './src/screens/HomeScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import SpeedReaderScreen from './src/screens/SpeedReaderScreen';
+import Onboard from './src/components/Onboard';
 
 export default class App extends React.Component {
   constructor() {
@@ -25,7 +26,8 @@ export default class App extends React.Component {
       return <Expo.AppLoading />;
     }
     return (
-       <AppDrawerNavigator />
+      //<Onboard />
+      <AppDrawerNavigator />
     );
   }
 }

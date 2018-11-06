@@ -12,4 +12,4 @@ const Drawer = () => {
     );
 };
 
-export default FeatureList;
+export default Drawer;

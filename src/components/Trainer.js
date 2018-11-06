@@ -1,15 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Image } from 'react-native';
+import { text } from '../assets/bom.json';
 
 class Trainer extends React.Component {
     state = {
-         text: ['1', '2', '3', '4', '5', '6', '7',
-         '8', '9', '10', '11', '12', 'a', 'whole', 'two', 'lots',
-         'it', 'came', 'to', 'pass', 'that', 'Zane',
-         'it', 'came', 'to', 'pass', 'that', 'Zane',
-         'it', 'came', 'to', 'pass', 'that', 'Zane',
-         'it', 'came', 'to', 'pass', 'that', 'Zane',
-         'it', 'came', 'to', 'pass', 'that', 'Zane'],
+         text,
          count: 0,
          speed: 500,
          isOn: false
@@ -17,49 +12,49 @@ class Trainer extends React.Component {
 
     rewind = () => {
         this.stopTrainer();
-        console.log("isOn in rewind should be false and is " , {isOn: this.state.isOn});
-        let tempCount = 0;
-        tempCount = this.state.count;
-        
+
         //TODO add logic here for rewinding approx 10 seconds and not just four words.
         if (this.state.count >= 4) {
             this.setState({ count: this.state.count - 4 });
         }
         this.startTrainer();
-        //console.log(tempCount);
     }
 
     lowerSpeed = () => {
         const speed = this.state.speed;
-        console.log({ speed: this.state.speed });
+        //console.log({ speed: this.state.speed });
         if (this.state.speed <= 800) {
             this.setState({ speed: this.state.speed + 100 });
         }
-        this.stopTrainer();
-        console.log('speed is', speed);
-        setTimeout(this.startTrainer, speed);
+        if (this.state.isOn) {
+            this.stopTrainer();
+            setTimeout(this.startTrainer, speed);
+        }   
     }
 
     raiseSpeed = () => {
         const speed = this.state.speed;
-        console.log({ speed: this.state.speed });
+        //console.log({ speed: this.state.speed });
         if (this.state.speed > 100) {
             this.setState({ speed: this.state.speed - 100 });
         }
-        this.stopTrainer();
-        setTimeout(this.startTrainer, speed);
+        if (this.state.isOn) {
+            this.stopTrainer();
+            setTimeout(this.startTrainer, speed);
+        }
     }
 
     startTrainer = () => {
+        console.log(text);
+
         const speed = this.state.speed;
         this.interval = setInterval(() => {
             this.setState(
                 { count: this.state.count + 1 }
             );
-        }, speed);
-        console.log('isOn in startTrainer should be false and is ', { isOn: this.state.isOn });
+        }, speed);  
+
         this.isOnToggle();
-        console.log('isOn in startTrainer should be true and is ', { isOn: this.state.isOn });
     }
 
     stopTrainer = () => {
@@ -121,7 +116,8 @@ const styles = StyleSheet.create({
       fontSize: 25,
       color: 'white',
       textAlign: 'center',
-      margin: 40
+      margin: 40,
+      height: 50
     },
     readerCtrls: {
         flexWrap: 'wrap', 
