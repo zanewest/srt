@@ -3,6 +3,7 @@ import * as Expo from 'expo';
 import { createDrawerNavigator } from 'react-navigation';
 import HomeScreen from './src/screens/HomeScreen';
 import AboutScreen from './src/screens/AboutScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import SpeedReaderScreen from './src/screens/SpeedReaderScreen';
 import Onboard from './src/components/Onboard';
 
@@ -35,5 +36,6 @@ export default class App extends React.Component {
 const AppDrawerNavigator = createDrawerNavigator({
   Home: SpeedReaderScreen,
   SpeedReader: SpeedReaderScreen,
-  About: AboutScreen
+  About: AboutScreen,
+  Settings: SettingsScreen
 });
